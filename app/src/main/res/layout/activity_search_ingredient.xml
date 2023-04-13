@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SearchIngredientActivity">
+
+
+    <Button
+        android:id="@+id/retrieve_meals"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="137dp"
+        android:layout_marginTop="32dp"
+        android:text="Retrieve Meals"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ingredient_input" />
+
+    <Button
+        android:id="@+id/save_meals"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="152dp"
+        android:layout_marginTop="25dp"
+        android:text="Save Meals"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/retrieve_meals" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/ingredient_input"
+        android:layout_width="335dp"
+        android:layout_height="77dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="16dp"
+        android:hint="hint"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/meal_details"
+        android:layout_width="327dp"
+        android:layout_height="385dp"
+        android:layout_marginStart="42dp"
+        android:layout_marginTop="42dp"
+        android:scrollbars="vertical"
+        android:text="Meal Details"
+        android:textColor="#000000"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/save_meals" />
+</androidx.constraintlayout.widget.ConstraintLayout>
