@@ -12,33 +12,33 @@
         android:id="@+id/retrieve_meals"
         android:layout_width="170dp"
         android:layout_height="55dp"
-        android:layout_marginStart="18dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="50dp"
         android:background="@drawable/round_button"
         android:fontFamily="@font/poppins_bold"
         android:text="Retrieve Meals"
         android:textColor="#474644"
         android:textSize="18dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ingredient_input" />
+        app:layout_constraintStart_toEndOf="@+id/ingredient_input"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/save_meals"
         android:layout_width="170dp"
         android:layout_height="55dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="50dp"
         android:background="@drawable/round_button"
         android:fontFamily="@font/poppins_bold"
         android:text="Save Meals"
         android:textColor="#474644"
         android:textSize="18dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ingredient_input" />
+        app:layout_constraintStart_toEndOf="@+id/retrieve_meals"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/ingredient_input"
-        android:layout_width="375dp"
+        android:layout_width="329dp"
         android:layout_height="56dp"
         android:layout_marginStart="18dp"
         android:layout_marginTop="50dp"
@@ -54,19 +54,15 @@
 
     <TextView
         android:id="@+id/meal_details"
-        android:layout_width="375dp"
-        android:layout_height="535dp"
-        android:layout_marginStart="18dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="18dp"
-        android:layout_marginBottom="10dp"
+        android:layout_width="693dp"
+        android:layout_height="273dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="15dp"
         android:fontFamily="@font/poppins_medium"
         android:scrollbars="vertical"
         android:text="Meal Details Here"
         android:textColor="#FFFFFF"
         android:textSize="18dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/save_meals" />
+        app:layout_constraintTop_toBottomOf="@+id/ingredient_input" />
 </androidx.constraintlayout.widget.ConstraintLayout>

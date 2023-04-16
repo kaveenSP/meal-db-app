@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">coursework2_20210557</string>
+    <string name="app_name">Chef Lab</string>
     <string name="title_activity_search_meal_by_ingredient">SearchMealByIngredientActivity</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>

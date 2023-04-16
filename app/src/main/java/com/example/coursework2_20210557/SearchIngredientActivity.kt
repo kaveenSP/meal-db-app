@@ -3,11 +3,14 @@ package com.example.coursework2_20210557
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.method.ScrollingMovementMethod
-import android.util.Log
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.example.coursework2_20210557.database.MealData
 import com.example.coursework2_20210557.database.MealDatabase
 import com.google.android.material.textfield.TextInputEditText
@@ -20,10 +23,10 @@ import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
 
-
 class SearchIngredientActivity : AppCompatActivity() {
 
     private lateinit var mealDB: MealDatabase
+    private var mealDetailString = ""
 
     @SuppressLint("MissingInflatedId")
     @OptIn(DelicateCoroutinesApi::class)
@@ -40,28 +43,33 @@ class SearchIngredientActivity : AppCompatActivity() {
         var response: JSONArray? = null
 
         retrieveMeals.setOnClickListener {
+            mealDetailString = ""
             val ingredient = ingredientInput.text.toString()
-            GlobalScope.launch {
-                response = searchMeal(ingredient)
+            if (ingredient == "") {
+                Toast.makeText(applicationContext, "Enter An Ingredient", Toast.LENGTH_SHORT).show()
+            } else {
+                GlobalScope.launch {
+                    response = searchMeal(ingredient)
 
-
-                var mealDetailString = ""
-                // Update the UI on the main thread
-                withContext(Dispatchers.Main) {
-                    if (response != null) {
-                        for (i in 0 until response!!.length()) {
-                            val meal = response!!.getJSONObject(i)
-                            val keys = meal.keys()
-                            while (keys.hasNext()) {
-                                val key = keys.next()
-                                val value = meal.get(key)
-                                mealDetailString += "\n$key: $value"
+                    // Update the UI on the main thread
+                    withContext(Dispatchers.Main) {
+                        if (response != null) {
+                            for (i in 0 until response!!.length()) {
+                                val meal = response!!.getJSONObject(i)
+                                val keys = meal.keys()
+                                while (keys.hasNext()) {
+                                    val key = keys.next()
+                                    val value = meal.get(key)
+                                    if (value != null || value != "") {
+                                        mealDetailString += "\n$key: $value"
+                                    }
+                                }
+                                mealDetailString += "\n\n\n"
                             }
-                            mealDetailString += "\n\n\n"
                         }
+                        mealDetails.text = mealDetailString
+                        mealDetails.movementMethod = ScrollingMovementMethod()
                     }
-                    mealDetails.text = mealDetailString
-                    mealDetails.movementMethod = ScrollingMovementMethod()
                 }
             }
         }
@@ -126,17 +134,18 @@ class SearchIngredientActivity : AppCompatActivity() {
                                 meal.getString("strCreativeCommonsConfirmed"),
                                 meal.getString("dateModified")
                             )
+
                             mealDB.mealDataDao().insertMealData(newMeal)
                         }
                     }
             }
         }
     }
-// List<MealIngredientResponse>?
-    private suspend fun searchMeal(ingredient: String): JSONArray {
+
+    private fun searchMeal(ingredient: String): JSONArray {
         var returnArray = JSONArray()
         // Build the API URL with the user input
-        val url = URL("https://www.themealdb.com/api/json/v1/1/filter.php?i=$ingredient")
+        val url = URL("https://www.themealdb.com/api/json/v1/1/search.php?s=$ingredient")
 
         val connection = url.openConnection() as HttpURLConnection
         connection.requestMethod = "GET"
@@ -154,37 +163,37 @@ class SearchIngredientActivity : AppCompatActivity() {
             val stringResponse = response.toString()
             try {
                 val jsonObject = JSONObject(stringResponse)
-                val mealsArray = jsonObject.getJSONArray("meals")
-                for (i in 0 until mealsArray.length()) {
-                    val meal = mealsArray.getJSONObject(i)
-                    val idMeal = meal.getString("idMeal")
-                    val mealDataUrl = URL("https://www.themealdb.com/api/json/v1/1/lookup.php?i=$idMeal")
-
-                    val con = mealDataUrl.openConnection() as HttpURLConnection
-                    con.requestMethod = "GET"
-                    val responseCode1 = connection.responseCode
-                    if (responseCode1 == HttpURLConnection.HTTP_OK) {
-                        val inputStream1 = BufferedReader(InputStreamReader(con.inputStream))
-                        val response1 = StringBuffer()
-                        var inputLine1: String?
-                        while (inputStream1.readLine().also { inputLine1 = it } != null) {
-                            response1.append(inputLine1)
-                        }
-                        inputStream1.close()
-                        val mealObjectJSON = JSONObject(response1.toString())
-                        returnArray.put(mealObjectJSON.getJSONArray("meals").getJSONObject(0))
-
-
-                    } else {
-                        println("GET request not successful")
-                    }
-                }
+                returnArray = jsonObject.getJSONArray("meals")
             } catch (e: JSONException) {
-                e.printStackTrace()
+                Handler(Looper.getMainLooper()).post {
+                    Toast.makeText(applicationContext, "No Results Found", Toast.LENGTH_SHORT).show()
+                }
             }
         } else {
-            println("GET request not successful")
+
         }
+
     return returnArray
+    }
+
+    //save instances to state
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        // Save the state of your activity to the outState Bundle
+        outState.putString("mealData", mealDetailString)
+
+    }
+
+    //restore instances from state
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) { // Here You have to restore count value
+        super.onRestoreInstanceState(savedInstanceState)
+
+        mealDetailString = savedInstanceState.getString("mealData") ?: String()
+
+        //recycler view to dynamically display the list of json data
+        val mealDetails = findViewById<TextView>(R.id.meal_details)
+        mealDetails.text = mealDetailString
+
     }
 }
