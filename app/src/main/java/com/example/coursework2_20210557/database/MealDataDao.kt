@@ -7,10 +7,10 @@ interface MealDataDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertMealData(mealData: MealData)
 
-    @Query("SELECT * FROM MealData ORDER BY strMeal ASC")
+    @Query("SELECT * FROM MealData ORDER BY Meal ASC")
     fun readAllMealData(): LiveData<List<MealData>>
 
-    @Query("SELECT * FROM MealData WHERE LOWER(strMeal) LIKE '%' || LOWER(:searchString) || '%' OR LOWER(strIngredient01) LIKE '%' || LOWER(:searchString) || '%' OR LOWER(strIngredient02) LIKE '%' || LOWER(:searchString) || '%' OR LOWER(strIngredient03) LIKE '%' || LOWER(:searchString) || '%' OR LOWER(strIngredient04) LIKE '%' || LOWER(:searchString) || '%' OR LOWER(strIngredient05) LIKE '%' || LOWER(:searchString) || '%' OR LOWER(strIngredient06) LIKE '%' || LOWER(:searchString) || '%' OR LOWER(strIngredient07) LIKE '%' || LOWER(:searchString) || '%' OR LOWER(strIngredient08) LIKE '%' || LOWER(:searchString) || '%' OR LOWER(strIngredient09) LIKE '%' || LOWER(:searchString) || '%' OR LOWER(strIngredient10) LIKE '%' || LOWER(:searchString) || '%'")
+    @Query("SELECT * FROM MealData WHERE LOWER(Meal) LIKE '%' || LOWER(:searchString) || '%' OR LOWER(Ingredient01) LIKE '%' || LOWER(:searchString) || '%' OR LOWER(Ingredient02) LIKE '%' || LOWER(:searchString) || '%' OR LOWER(Ingredient03) LIKE '%' || LOWER(:searchString) || '%' OR LOWER(Ingredient04) LIKE '%' || LOWER(:searchString) || '%' OR LOWER(Ingredient05) LIKE '%' || LOWER(:searchString) || '%' OR LOWER(Ingredient06) LIKE '%' || LOWER(:searchString) || '%' OR LOWER(Ingredient07) LIKE '%' || LOWER(:searchString) || '%' OR LOWER(Ingredient08) LIKE '%' || LOWER(:searchString) || '%' OR LOWER(Ingredient09) LIKE '%' || LOWER(:searchString) || '%' OR LOWER(Ingredient10) LIKE '%' || LOWER(:searchString) || '%' OR LOWER(Ingredient11) LIKE '%' || LOWER(:searchString) || '%' OR LOWER(Ingredient12) LIKE '%' || LOWER(:searchString) || '%' OR LOWER(Ingredient13) LIKE '%' || LOWER(:searchString) || '%' OR LOWER(Ingredient14) LIKE '%' || LOWER(:searchString) || '%' OR LOWER(Ingredient15) LIKE '%' || LOWER(:searchString) || '%' OR LOWER(Ingredient16) LIKE '%' || LOWER(:searchString) || '%' OR LOWER(Ingredient17) LIKE '%' || LOWER(:searchString) || '%' OR LOWER(Ingredient18) LIKE '%' || LOWER(:searchString) || '%' OR LOWER(Ingredient19) LIKE '%' || LOWER(:searchString) || '%' OR LOWER(Ingredient20) LIKE '%' || LOWER(:searchString) || '%'")
     fun searchMeals(searchString: String):LiveData<List<MealData>>
 
 

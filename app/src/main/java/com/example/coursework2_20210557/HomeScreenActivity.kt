@@ -257,6 +257,8 @@ class HomeScreenActivity : AppCompatActivity() {
                     null,
                     null
                 )
+
+                //save hardcoded meal data to local database
                 mealDB.mealDataDao().insertMealData(meal01)
                 mealDB.mealDataDao().insertMealData(meal02)
                 mealDB.mealDataDao().insertMealData(meal03)

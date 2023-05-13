@@ -4,35 +4,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#65739D"
+    android:background="#FFFFFF"
     tools:context=".SearchIngredientActivity">
 
 
     <Button
         android:id="@+id/retrieve_meals"
         android:layout_width="170dp"
-        android:layout_height="55dp"
+        android:layout_height="50dp"
         android:layout_marginStart="18dp"
         android:layout_marginTop="12dp"
         android:background="@drawable/round_button"
         android:fontFamily="@font/poppins_bold"
         android:text="Retrieve Meals"
-        android:textColor="#474644"
-        android:textSize="18dp"
+        android:textColor="#FFFFFF"
+        android:textSize="17sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ingredient_input" />
 
     <Button
         android:id="@+id/save_meals"
         android:layout_width="170dp"
-        android:layout_height="55dp"
+        android:layout_height="50dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/round_button"
         android:fontFamily="@font/poppins_bold"
         android:text="Save Meals"
-        android:textColor="#474644"
-        android:textSize="18dp"
+        android:textColor="#FFFFFF"
+        android:textSize="17sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ingredient_input" />
 
@@ -44,11 +44,11 @@
         android:layout_marginTop="50dp"
         android:fontFamily="@font/poppins_medium"
         android:hint="Ingredient"
-        android:textColor="#FFFFFF"
-        android:textColorHighlight="#FFFFFF"
-        android:textColorHint="#FFFFFF"
-        android:textColorLink="#FFFFFF"
-        android:textSize="18dp"
+        android:textColor="#000000"
+        android:textColorHighlight="#000000"
+        android:textColorHint="#000000"
+        android:textColorLink="#000000"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -63,8 +63,8 @@
         android:fontFamily="@font/poppins_medium"
         android:scrollbars="vertical"
         android:text="Meal Details Here"
-        android:textColor="#FFFFFF"
-        android:textSize="18dp"
+        android:textColor="#000000"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -46,7 +46,7 @@ class SearchIngredientActivity : AppCompatActivity() {
             mealDetailString = ""
             val ingredient = ingredientInput.text.toString()
             if (ingredient == "") {
-                Toast.makeText(applicationContext, "Enter An Ingredient", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, "Enter An Ingredient", Toast.LENGTH_LONG).show()
             } else {
                 GlobalScope.launch {
                     response = searchMeal(ingredient)
@@ -75,6 +75,9 @@ class SearchIngredientActivity : AppCompatActivity() {
         }
 
         saveMeals.setOnClickListener {
+            if(mealDetailString == "") {
+                Toast.makeText(applicationContext, "Please Retrieve Meals Before Saving", Toast.LENGTH_LONG).show()
+            } else {
                 GlobalScope.launch(Dispatchers.IO) {
                     if (response != null) {
                         for (i in 0 until response!!.length()) {
@@ -134,10 +137,13 @@ class SearchIngredientActivity : AppCompatActivity() {
                                 meal.getString("strCreativeCommonsConfirmed"),
                                 meal.getString("dateModified")
                             )
-
                             mealDB.mealDataDao().insertMealData(newMeal)
                         }
+                        Handler(Looper.getMainLooper()).post {
+                            Toast.makeText(applicationContext, "Meal Details Successfully Saved To Local Database", Toast.LENGTH_LONG).show()
+                        }
                     }
+                }
             }
         }
     }
@@ -166,34 +172,31 @@ class SearchIngredientActivity : AppCompatActivity() {
                 returnArray = jsonObject.getJSONArray("meals")
             } catch (e: JSONException) {
                 Handler(Looper.getMainLooper()).post {
-                    Toast.makeText(applicationContext, "No Results Found", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, "No Results Found", Toast.LENGTH_LONG).show()
                 }
             }
         } else {
-
+            Toast.makeText(applicationContext, "Unable To Retrieve Data", Toast.LENGTH_LONG).show()
         }
 
     return returnArray
     }
 
-    //save instances to state
+    //save instances
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 
         // Save the state of your activity to the outState Bundle
         outState.putString("mealData", mealDetailString)
-
     }
 
-    //restore instances from state
+    //restore instances
     override fun onRestoreInstanceState(savedInstanceState: Bundle) { // Here You have to restore count value
         super.onRestoreInstanceState(savedInstanceState)
-
         mealDetailString = savedInstanceState.getString("mealData") ?: String()
 
-        //recycler view to dynamically display the list of json data
+        //view data in the text view
         val mealDetails = findViewById<TextView>(R.id.meal_details)
         mealDetails.text = mealDetailString
-
     }
 }
